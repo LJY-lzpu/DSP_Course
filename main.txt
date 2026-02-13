@@ -1,0 +1,148 @@
+用XeLatex编译
+
+作者：甚远
+链接：https://www.zhihu.com/question/616919784/answer/107826723864
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{xeCJK}
+%\usepackage{ctex}
+
+% 字体设置
+\usepackage{amsmath}   % 数学符号
+\usepackage{amssymb}   % 数学符号
+\usepackage{amsfonts}  % 数学字体
+\usepackage{graphicx}  % 插入图片
+\usepackage{fancyhdr}  % 页眉页脚设置
+\usepackage{geometry}  % 页面布局
+\usepackage{hyperref}  % 超链接支持
+\usepackage{listings}  % 程序代码显示
+\usepackage{tikz}      % 绘图
+\usepackage{titlesec}  % 标题设置
+\usepackage{fontspec}  % 字体支持（适用于XeLaTeX/LuaLaTeX）
+
+% 页面布局
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+
+% 封面设置
+\title{
+    \vspace{-3cm}
+    \Huge{\textbf{物理讲义}} \\
+    \vspace{0.5cm}
+    \Large{课程名称: 基础物理学} \\
+    \vspace{1.5cm}
+    \Large{讲义编号: 001} \\
+    \vspace{2cm}
+    \large{编写者: XXX} \\
+    \vfill
+    \Large{日期: \today}
+}
+
+\author{} % 作者为空，封面不用显示作者
+\date{}
+
+% 页眉页脚设置
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{物理讲义}
+\fancyhead[C]{}
+\fancyhead[R]{编写者：XXX}
+\fancyfoot[C]{\thepage}
+
+% 章节格式
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\begin{document}
+
+% 封面
+\maketitle
+\newpage
+
+% 目录
+\tableofcontents
+\newpage
+
+% 第一章
+\section{力学基础}
+
+力学是物理学的基础学科之一，研究物体的运动及其与力的相互关系。力学有两个主要分支：经典力学和相对论力学。
+
+\subsection{牛顿定律}
+
+牛顿三大定律是经典力学的核心内容，它们描述了物体的运动规律：
+
+\begin{itemize}
+    \item 第一法则：物体若不受外力作用，则保持匀速直线运动。
+    \item 第二法则：物体的加速度与所受外力成正比，与物体的质量成反比。
+    \item 第三法则：物体之间的相互作用力是大小相等、方向相反的。
+\end{itemize}
+
+\subsection{重力}
+
+重力是地球对物体的引力。我们常常用重力加速度来表示物体受到的引力的大小，标准重力加速度为 $9.8 \, \text{m/s}^2$。
+
+\begin{equation}
+    F = mg
+\end{equation}
+其中，$F$ 为重力，$m$ 为物体质量，$g$ 为重力加速度。
+
+\newpage
+
+% 第二章
+\section{电磁学基础}
+
+电磁学是研究电磁现象的学科，主要包括电场、磁场、电流等内容。
+
+\subsection{库仑定律}
+
+库仑定律描述了电荷之间的相互作用力。两个点电荷之间的相互作用力大小与电荷的乘积成正比，与它们之间的距离的平方成反比：
+
+\begin{equation}
+    F = k_e \frac{q_1 q_2}{r^2}
+\end{equation}
+其中，$F$ 为电荷之间的作用力，$q_1$ 和 $q_2$ 为电荷量，$r$ 为电荷之间的距离，$k_e$ 为库仑常数。
+
+\subsection{电场}
+
+电场是电荷间作用力的空间表现。电场强度 $\mathbf{E}$ 定义为单位电荷所受的力：
+
+\begin{equation}
+    \mathbf{E} = \frac{\mathbf{F}}{q}
+\end{equation}
+其中，$\mathbf{F}$ 为电场力，$q$ 为电荷量。
+
+\newpage
+
+% 第三章
+\section{热力学}
+
+热力学是研究热与能量转化规律的学科。热力学的基本定律包括：
+
+\subsection{热力学第一定律}
+
+热力学第一定律，也称能量守恒定律，表示能量既不能被创造也不能被消灭，只能从一种形式转化为另一种形式：
+
+\begin{equation}
+    \Delta U = Q - W
+\end{equation}
+其中，$\Delta U$ 为内能变化，$Q$ 为热量，$W$ 为功。
+
+\subsection{热力学第二定律}
+
+热力学第二定律表明，孤立系统的熵总是增加的，熵增原则指出自然过程趋向于无序状态。
+
+\newpage
+
+% 参考文献
+\section{参考文献}
+
+\begin{thebibliography}{99}
+    \bibitem{ref1} 物理学原理，John D. Cutnell，Kenny W. Johnson，Wiley出版社，2018。
+    \bibitem{ref2} 现代物理学导论，David J. Griffiths，Prentice Hall出版社，2005。
+\end{thebibliography}
+
+\end{document}
