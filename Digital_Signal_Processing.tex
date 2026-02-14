@@ -1463,13 +1463,148 @@ General Solution
 
 通常我们就管，零附近叫低频，管正负派都叫高频。我觉得这个“高频”（High Frequency）得打一个引号，这和我们在离散时间的信号系统里那个高频不大一样。因为它究竟有多高，并不是由物理来限制，而是由采样所决定。我们待会会把这个概念更清晰地传达给大家。所以说，它这个“高”，我们要打一个引号，它并不是说物理上的高，而是接近了我们的采样频率。我们采样一旦定了，我们才有离散信号，然而离散信号一旦能够浮出水面，这意味着我们可以看到的频率最高也就是采样频率了，再高的频率我们是看不见的。好的，这是我们对于离散时间系统的一个描述。
 
-\subsubsection{Fourier Transform}\quad
+\subsubsection{Discrete-Time Fourier Transform（DTFT）}\quad
 
 既然系统都可以这样描述了，当然我们的信号也很自然地会有使用傅里叶变换的这么一个方式来进行沟通
 \begin{equation}
-    \left \{ x\left (  n\right )  \right \} \longrightarrow X\left (  e^{j\omega}\right )   = \sum_{k=-\infty}^{+\infty}x(k)e^{j\omega k}
+    \left \{ x\left (  n\right )  \right \} \longrightarrow X\left (  e^{j\omega}\right )   = \sum_{k=-\infty}^{+\infty}x(k)e^{-j\omega k}
 \end{equation}
 这就是离散时间的傅里叶变换。
+
+那么这个东西跟我们熟悉的傅里叶变换，有一点点差异。我们熟悉的是什么呢？我们在信号与系统里头，大家是仔细学过傅里叶变换的啊！傅里叶变换这部分知识，原本是应该在数学分析里讲，因为我知道大家的数学应该是学得不错的啊！那么，当时可能没有落地在具体应用上。而我们在信号与系统里头，对傅里叶变换的知识进行一次复习，这个是可以帮助我们加深对傅里叶变换的偏物理面的这方面的理解，更靠近物理端。
+
+而今天呢，我们从离散的角度，再次复习这个概念是因为，这个概念真的对于我们电子信息而言太重要了！
+
+这是正变换，它对应的就是积分。因为我们熟悉的傅里叶变换都是这个样子的
+\begin{equation}
+    \hat{X}\left (  \omega \right )   = \int_{-\infty}^{+\infty}x(t)e^{-j\omega t}\text{d}t
+\end{equation}
+这是我们在信号与系统里头，大家已经看惯了的一套符号。这里我们只不过是使用什么呢，使用离散的求和代替了连续的积分而已，别的都没变。
+
+好，既然有傅里叶变换，那很自然的就有傅里叶反变换。大家知道这个傅里叶反变换怎么做吗？首先我们说你这个反变换跟连续的相比，最大的不同已经出现了——就是你做的事只在$\left [-\pi ,\pi \right ]$上做，不是从负无穷到正无穷。
+
+我们再强调一遍，离散的傅里叶反变换，它要做积分，但是它这个积分只是在$\left [-\pi ,\pi \right ]$上做，原因在于我们离散的频率只有这么快，再多再快的了没有了。从数学上讲，它正弦再加上$2\pi$的整数倍，结果不会有任何改变。从物理上讲，它的$\left [-\pi ,\pi \right ]$对应的实际上是我们的采样频率。所以，它是在$\left [-\pi ,\pi \right ]$上做的。但是在$\left [-\pi ,\pi \right ]$上做，这个事啊，比我们连续的傅里叶反变换要简单！为什么更简单？你就在这个正变换的两端同时对$\left [-\pi ,\pi \right ]$积分，你乘上什么东西对$\left [-\pi ,\pi \right ]$积分呢？你乘上这个，两端都乘上这个东西
+\begin{equation}
+    X\left (  e^{j\omega}\right )  \cdot e^{j\omega n} = \sum_{k=-\infty}^{+\infty}x(k)e^{-j\omega k}\cdot e^{j\omega n}
+\end{equation}
+你看，两端都乘上$e^{j\omega n}$，然后对$\left [-\pi ,\pi \right ]$积分。你会发现，这个右端啊，很有趣。我们$\left [-\pi ,\pi \right ]$积分，这意味着我们这里积的实际上是
+\begin{equation}
+    \int_{-\pi}^{\pi}e^{-j\omega \left (n-k\right)}\text{d}\omega
+\end{equation}
+我们积的是这个东西，这个积分等于几？如果$n\neq k$的话，这个积分是多少？一定是零！因为$n\neq k$，你想啊，无论$\cos$还是$\sin$，你在一个周期上做积分都是零。你加上倍频更是零了！因为加上倍频那震荡不止一周了。
+
+唯一不得零的情况在哪里？就是$n= k$的时候。因此，这个积分呐，它在$n= k$的时候是$2\pi$，其它全部情况都是零
+\begin{equation}
+    \int_{-\pi}^{\pi}e^{-j\omega \left (n-k\right)}\text{d}\omega = \left\{\begin{matrix}
+ 2\pi & n=k\\
+  0 & others
+\end{matrix}\right.
+\end{equation}
+这么一来，再瞅瞅等号右端，这里没毛病了。只有一项能留下，哪一项？就是对应于$n= k$那一项，也就是$x(n)$这一项
+\begin{equation}
+    X\left (  e^{j\omega}\right )  \cdot e^{j\omega n} = \sum_{k=-\infty}^{+\infty}x(n)e^{-j\omega k}\cdot e^{j\omega n}
+\end{equation}
+所以$x(n)$就是$\frac{1}{2\pi}$加上后面一串，$\frac{1}{2\pi}$是为了把在$\left [-\pi ,\pi \right ]$上积分$e^{j\omega n}$的结果$2\pi$给怼掉。
+\begin{equation}
+    x(n)   = \frac{1}{2\pi}\int_{-\pi}^{\pi}X\left(e^{j\omega }\right)\cdot e^{j\omega n}\text{d}\omega
+\end{equation}
+这就是离散时间信号的傅里叶变换对，和我们熟悉的连续信号傅里叶变换挺像——你看这$\frac{1}{2\pi}$也在这。区别就是，这里用$\left [-\pi ,\pi \right ]$取代负无穷到正无穷，并且正变换用求和取代积分。
+
+好的，我们来看两个典型的信号。
+\begin{itemize}
+    \item 1.\quad $x(n) = a^n U(n)$\quad $\left | a \right | <1$
+\end{itemize}
+第一个信号是这个，这里我们假定这个$a$是可以确保收敛的。我们来计算一下它的傅里叶变换。根据我们这里刚刚定义好的
+\begin{equation}
+    X\left (  e^{j\omega}\right )   = \sum_{k=0}^{+\infty}a^k e^{-j\omega k}
+\end{equation}
+这个求和大家已经很熟悉了
+\begin{equation}
+    X\left (  e^{j\omega}\right )   = \sum_{k=0}^{+\infty}a^k e^{-j\omega k}=\frac{1}{1-a\cdot e^{-j\omega }}
+\end{equation}
+这个东西大家在微积分里应该是很熟悉的啊！这个应当作为结论背下来，这个算微积分大家应该是能够秒反应过来的。
+\begin{itemize}
+    \item 2.\quad Ideal Lowpass Signal
+\end{itemize}
+这个第二个啊，我们来一个理想的低通信号。也就是说，我们现在直接先定义它的频率特性。刚才我们强调过，作为我们电子信息专业的同学，对信号也好，系统也好，我们的认知视角从来都是时域和频域并行的，缺一不可。这是我们电子信息人的血液！一定是深埋在我们血液里的东西。那么
+\begin{equation}
+    X\left ( e^{j\omega } \right)= \left\{\begin{matrix}
+ 1 & \left | \omega \right |\le \omega_0\\
+  0 & others
+\end{matrix}\right.
+\end{equation}
+因此，我们画一下它的频域特性，假设这是$\left [-\pi ,\pi \right ]$，然后这是$\left [-\omega_0 ,\omega_0 \right ]$，它就是这么个样子
+
+{\centering
+\begin{tikzpicture}[
+    scale=1.5,             % 放大便于观察
+    axis/.style={thick, black, >=Stealth}, % 坐标轴样式
+    pulse/.style={blue, line width=1pt}, % 仅微加粗：默认thick≈0.8pt → 1pt（一点点）
+]
+    % 1. 定义参数：ω₀ = π/2（可自行修改）
+    \def\w0{pi/2}
+    
+    % ========== 第一步：先画所有坐标轴+刻度（优先级最高，不被遮挡） ==========
+    % x轴（ω）：范围[-pi-0.5, pi+0.5]，标注ω
+    \draw[axis] (-pi-0.5, 0) -- (pi+0.5, 0) node[right] {$\omega$};
+    % y轴：完整显示，从0到1.2，标注X(e^{jω})
+    \draw[axis] (0, 0) -- (0, 1.2) node[above] {$X\left(e^{j\omega}\right)$};
+    
+    % 刻度线（先画，确保不被覆盖）
+    % x轴刻度：-π、-ω₀、0、ω₀、π（细短线）
+    \foreach \x in {-pi, -\w0, 0, \w0, pi} {
+        \draw[black, thin] (\x, 0.05) -- (\x, -0.05);
+    }
+    % y轴刻度：0、1（细短线，完全暴露，无遮挡）
+    \foreach \y in {0, 1} {
+        \draw[black, thin] (0.05, \y) -- (-0.05, \y);
+    }
+    
+    % ========== 第二步：标注所有文字（在刻度后，位置清晰） ==========
+    % x轴标注
+    \node[below=2pt] at (-pi, 0) {$-\pi$};
+    \node[below=2pt] at (-\w0, 0) {$-\omega_0$};
+    \node[below=2pt] at (\w0, 0) {$\omega_0$};
+    \node[below=2pt] at (pi, 0) {$\pi$};
+    % y轴标注（1的位置完全在y轴左侧，无遮挡）
+    \node[left=4pt] at (0, 1) {$1$}; % 左移4pt，远离y轴，更清晰
+    
+    % ========== 第三步：绘制理想低通脉冲（仅线条，不碰y轴） ==========
+    % 左侧竖线：-ω₀ → 1
+    \draw[pulse] (-\w0, 0) -- (-\w0, 1);
+    % 右侧竖线：ω₀ → 1
+    \draw[pulse] (\w0, 0) -- (\w0, 1);
+    % 顶部横线：-ω₀ → ω₀（仅脉冲顶部，不覆盖y轴）
+    \draw[pulse] (-\w0, 1) -- (\w0, 1);
+    % x轴其余区域的基线（细黑线，增强对比）
+    \draw[black, thin] (-pi, 0) -- (-\w0, 0);
+    \draw[black, thin] (\w0, 0) -- (pi, 0);
+\end{tikzpicture}\par
+}
+理想的。如果是这样，我们想看看它的时域的情况。因此我们要用这一条
+\begin{equation}
+    x(n)   = \frac{1}{2\pi}\int_{-\pi}^{\pi}X\left(e^{j\omega }\right)\cdot e^{j\omega n}\text{d}\omega
+\end{equation}
+刚才我们用的是正变换，现在我们尝试用反变换。
+\begin{equation}
+\begin{aligned}
+    x(n)  &= \frac{1}{2\pi}\int_{-\pi}^{\pi}X\left(e^{j\omega }\right)\cdot e^{j\omega n}\text{d}\omega\\
+&=\frac{1}{2\pi}\int_{-\omega_0}^{\omega_0}e^{j\omega n}\text{d}\omega = \frac{1}{2\pi jn}e^{j\omega n} \biggr|^{\omega_0}_{-\omega_0}\\
+&=\frac{\sin \left( n\omega_0 \right)}{n\pi}
+\end{aligned}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
