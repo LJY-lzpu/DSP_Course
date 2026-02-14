@@ -20,6 +20,7 @@
 \usepackage{titlesec}  % 标题设置
 \usepackage{fontspec}  % 字体支持（适用于XeLaTeX/LuaLaTeX）
 \usepackage{setspace} %调行距的
+\usepackage{pgfplots} % 更简便的绘图方式，也可用纯 tikz
 
 
 % 页面布局
@@ -1450,11 +1451,42 @@ General Solution
 \end{equation}
 我们画一下这个图
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\linewidth]{sinc.eps}
-    \label{sinc}
-\end{figure}
+{\centering
+\begin{tikzpicture}[
+    scale=1.5,             % 放大便于观察
+    axis/.style={thick, black, >=Stealth},
+    pulse/.style={blue, line width=1.2pt}
+]
+    % 坐标轴范围：左右各留 0.5 空隙，y 轴略高于 1
+    \def\xmin{-3.6416} % -pi-0.5
+    \def\xmax{3.6416}  % pi+0.5
+    \def\ymin{-0.2}
+    \def\ymax{1.2}
+    
+    % ========== 坐标轴 ==========
+    \draw[axis] (\xmin,0) -- (\xmax,0) node[right] {$\omega$};
+    \draw[axis] (0,\ymin) -- (0,\ymax) node[above] {$\left|\displaystyle\frac{\sin(\pi \omega)}{\pi \omega}\right|$};
+    
+    % ========== 仅保留 -π 和 π 处的刻度线 ==========
+    \draw[black, thin] (-pi, 0.05) -- (-pi, -0.05);
+    \draw[black, thin] ( pi, 0.05) -- ( pi, -0.05);
+    
+    % y 轴刻度：0, 1
+    \foreach \y in {0,1} {
+        \draw[black, thin] (0.05, \y) -- (-0.05, \y);
+    }
+    
+    % ========== 仅标注 -π 和 π ==========
+    \node[below=2pt] at (-pi,0) {$-\pi$};
+    \node[below=2pt] at ( pi,0) {$\pi$};
+    \node[left=4pt] at (0,1) {$1$};
+    
+    % ========== 绘制 |sinc| 曲线（严格在 [-π, π] 内，显示多个震荡） ==========
+    \draw[pulse] plot[domain=-pi:pi, samples=400] 
+        (\x, {abs(sin(pi*\x r)/(pi*\x))});
+    
+\end{tikzpicture}\par}
+
 在零点的时候$\omega = 0$它是多少？这明显是一啊。然后它就下来，原本它是下来的，但是我们这里取了个模，它就会开始震荡。然后怎么样？我们这里要注意，这个地方我们要强调一个事实，这个事实对于我们理解离散时间的系统很重要。因为它的这个幅度在频率轴上并不是从负无穷到正无穷。我们在上堂课就谈到过，它这个幅度啊，以$2\pi$为周期。
 \begin{equation}
     H\left (  e^{j\omega} \right ) = H\left (  e^{j\left (\omega +2\pi \right )} \right ) 
@@ -1593,8 +1625,141 @@ General Solution
 &=\frac{\sin \left( n\omega_0 \right)}{n\pi}
 \end{aligned}
 \end{equation}
+我们对这个结果啊，要稍微地多说两句。是因为这个尽管是一个特别简单的例子，但它的内含却十分丰富。首先，它这个信号不因果吧（Non-Causal）！咱们对于因果是有认知的，那因果意味着$n<0$的时候它应该没有。但是这玩意，$n<0$的时候它照样有，因此它非因果。其次，这个东西很有趣，是因为它正变换回不去。我们在这稍微停一下。
 
+我们没有深究傅里叶变换啊！我们没有深究是因为傅里叶分析，这个即便在数学里面都是一个大分支，也有人管这个叫调和分析——当然调和分析涉及到的内容比傅里叶分析还要更广一些——但总之这是个大分支。这里面有大量的问题是非常有意思的，比方说我们今天就遇到过。我们不能把傅里叶分析整个讲给大家听，因为这个东西没有一学年根本是不可能的，而且也没这个必要。
 
+那么这里所遇到到是个什么事儿呢？就是并非你变过去就可以正常地变回来，或者说并非你能变回来就可以正常地变过去。这两点都是要打问号的。这个对于信号是有要求的。我们并没有把对信号的要求啊，提得这么明确。当然，你说这个信号它如果性质特别好啊——光滑得不得了，然后这个各阶导数都有，然后你这个而且在无穷远处还可以有很好地收敛——如果是这样的话！当然，它的傅里叶变换正过来反过去都没啥太大问题。
+
+但是大家发现了吗，这个信号就不大好——间断。就这个间断点会出毛病。我们告诉大家它这里出了什么毛病呢。就是我们在这啊，如果按照这里的计算，我们去做这个的傅里叶变换，照道理讲我们是应该就能直接回去啊！就是我在这做这个傅里叶变换我怎么做呢
+\begin{equation}
+    X\left ( e^{j\omega } \right) = \sum_{k=-\infty}^{+\infty}\frac{\sin \left( k\omega_0 \right)}{k\pi}e^{-j\omega k}
+\end{equation}
+我这样做，那么根据我们刚才傅里叶变换的这个定义，很遗憾！这个东西啊，它不一定收敛！大家能够想象得到它在哪个点上会出问题吗？间断点上！因为你变换你是变回去，变回去我们是准备在频域上重新看这件事情，我当然希望它变回去以后，就变成我原来这个理想的样子了。可是，很遗憾！在间断点上，它的收敛性保证不了。
+
+这里就出现了两个问题。第一个问题，我怎么才能让间断点上的收敛性可以不出毛病？那么我做到这一点的前提是，我这里做离散傅里叶变换，我做的这个结果应该在$\left [-\pi ,\pi \right ]$任何的点上，它应该都是能够收敛的
+\begin{equation}
+   \left |  X\left ( e^{j\omega } \right) \right |  < \infty \quad \forall\omega \in \left [-\pi ,\pi \right ]
+\end{equation}
+没问题吧！而这一件事，是可以保证的。只不过我们需要一个很强的条件，我们在这顺手就把这个条件说出来，因为这个东西就等于它
+\begin{equation}
+\begin{aligned}
+   &\left |  X\left ( e^{j\omega } \right) \right |  < \infty \quad \forall\omega \in \left [-\pi ,\pi \right ]\\
+=&\left |\sum_{k=-\infty}^{+\infty}x(k)e^{-j\omega k}\right |
+\end{aligned}
+\end{equation}
+对吧！然后我来放缩。
+\begin{equation}
+\begin{aligned}
+   &\left |  X\left ( e^{j\omega } \right) \right |  < \infty \quad \forall\omega \in \left [-\pi ,\pi \right ]\\
+=&\left |\sum_{k=-\infty}^{+\infty}x(k)e^{-j\omega k}\right |\le \sum_{k=-\infty}^{+\infty}\left | x(k) \right | < \infty
+\end{aligned}
+\end{equation}
+一定小于等于这个！所以如果我要求这个$x(k)$是所谓绝对可和的。怎么叫绝对可和——它的绝对值加起来都能够收敛，这叫做绝对可和（Absolute Summable）。如果我要求这个$x(k)$绝对可和，万事大吉了！这样的话，收敛就是肯定可以保证的。那我反变换回去，就是我要的结果了。很可惜！很可惜！这个级数
+\begin{equation}
+    \sum_{k}\frac{\left | \sin \left( k\omega \right)\right | }{k\pi}
+\end{equation}
+你都能看得见，它不是在每个$\omega$点上都能够收敛的，$\omega = \pm \frac{\pi}{2}$的时候怎么样？没戏了！$\omega = \pm \frac{\pi}{2}$的时候分子上是一，$\frac{1}{k}$，发散了。
+\begin{equation}
+    \sum_{k}\frac{\left | \sin \left( k\omega \right)\right | }{k\pi} = \infty \quad \omega = \pm \frac{\pi}{2}
+\end{equation}
+可能有同学会说，你这不是个充分条件吗？充分条件是什么意思呢？就是你这不收敛也不一定麻烦啊？
+
+还真的有人仔细研究过这件事啊，就研究什么呢，他就是研究这个，我这里不加无穷多项的，我加$2N$项，然后我看看加出来它跟我们预定的那个结果，他究竟差别在哪。然后我们就会发现啊，当$N$充分大了以后，他能够得到一个啥呢
+
+{\centering
+\begin{tikzpicture}[
+    scale=1.5,             % 放大便于观察
+    axis/.style={thick, black, >=Stealth}, % 坐标轴样式
+    pulse/.style={blue, line width=1.2pt}, % 蓝线加粗：1.2pt（原≈0.8pt）
+    red-box/.style={red, line width=0.8pt, dashed} % 红线加粗：0.8pt（原≈0.4pt）
+]
+    % 1. 定义参数：ω₀ = π/2（可自行修改）
+    \def\w0{pi/2}
+    
+    % ========== 第一步：先画所有坐标轴+刻度（优先级最高，不被遮挡） ==========
+    % x轴（ω）：范围[-pi-0.5, pi+0.5]，标注ω
+    \draw[axis] (-pi-0.5, 0) -- (pi+0.5, 0) node[right] {$\omega$};
+    % y轴：完整显示，从0到1.2，标注X(e^{jω})
+    \draw[axis] (0, 0) -- (0, 1.2) node[above] {$X\left(e^{j\omega}\right)$};
+    
+    % 刻度线（先画，确保不被覆盖）
+    % x轴刻度：-π、-ω₀、0、ω₀、π（细短线）
+    \foreach \x in {-pi, -\w0, 0, \w0, pi} {
+        \draw[black, thin] (\x, 0.05) -- (\x, -0.05);
+    }
+    % y轴刻度：0、1（细短线，完全暴露，无遮挡）
+    \foreach \y in {0, 1} {
+        \draw[black, thin] (0.05, \y) -- (-0.05, \y);
+    }
+    
+    % ========== 第二步：标注所有文字（在刻度后，位置清晰） ==========
+    % x轴标注
+    \node[below=2pt] at (-pi, 0) {$-\pi$};
+    \node[below=2pt] at (-\w0, 0) {$-\omega_0$};
+    \node[below=2pt] at (\w0, 0) {$\omega_0$};
+    \node[below=2pt] at (pi, 0) {$\pi$};
+    % y轴标注（1的位置完全在y轴左侧，无遮挡）
+    \node[left=4pt] at (0, 1) {$1$}; % 左移4pt，远离y轴，更清晰
+    
+    % ========== 第三步：绘制理想低通脉冲（仅线条，不碰y轴） ==========
+    % 左侧竖线：-ω₀ → 1
+    \draw[pulse] (-\w0, 0) -- (-\w0, 1);
+    % 右侧竖线：ω₀ → 1
+    \draw[pulse] (\w0, 0) -- (\w0, 1);
+    % 顶部横线：-ω₀ → ω₀（仅脉冲顶部，不覆盖y轴）
+    \draw[pulse] (-\w0, 1) -- (\w0, 1);
+    % x轴其余区域的基线（细黑线，增强对比）
+    \draw[black, thin] (-pi, 0) -- (-\w0, 0);
+    \draw[black, thin] (\w0, 0) -- (pi, 0);
+
+    % ========== 绘制红框包围两条竖直蓝线 ==========
+    % 左竖线红框：x范围(-w0-0.1, -w0+0.1)，y范围(-0.1, 1.1)
+    \draw[red-box] (-\w0 - 0.1, -0.1) rectangle (-\w0 + 0.1, 1.1);
+    % 右竖线红框：x范围(w0-0.1, w0+0.1)，y范围(-0.1, 1.1)
+    \draw[red-box] (\w0 - 0.1, -0.1) rectangle (\w0 + 0.1, 1.1);
+\end{tikzpicture}\par
+}
+
+就这个地方，它会强烈震荡。这个东西可能大家听说过，这个东西叫吉布斯（Gibbs）震荡。就这地儿会强烈震荡，因为这个间断点它就是补不回来。
+
+我们之所以要把这个例子告诉大家，就是要让大家知道两件事。第一件事，傅里叶分析啊，博大精深，这里面其实有大量的问题，就算你具体到我们应用当中也会遇到这样的问题，这是第一点。第二点，我们为什么在实际工程设计的时候，很少直接这么生硬地去做事情——太生硬了，理想化的东西太生硬了——我们工程设计如果我希望做一个低通滤波，我一定是怎么样呢？是把这个滤波器的形状要设计成这个样子
+
+{\centering
+\begin{tikzpicture}[
+    scale=1.5,
+    axis/.style={thick, black, >=Stealth},
+    pulse/.style={blue, line width=1pt},
+]
+    % ----- 定义半功率点（原图中的 ω₀）为 π/2 -----
+    \def\wHalf{pi/2}   % 半幅点，此时 H(ω)=0.5
+
+    % ========== 坐标轴 ==========
+    \draw[axis] (-pi-0.2,0) -- (pi+0.2,0) node[right] {$\omega$};
+    \draw[axis] (0,0) -- (0,1.2) node[above] {$X\left(e^{j\omega}\right)$};
+
+    % 刻度短线
+    \foreach \x in {-pi, -\wHalf, 0, \wHalf, pi} {
+        \draw[black, thin] (\x, 0.05) -- (\x, -0.05);
+    }
+    \foreach \y in {0,1} {
+        \draw[black, thin] (0.05, \y) -- (-0.05, \y);
+    }
+
+    % 标注文字
+    \node[below=2pt] at (-pi,0) {$-\pi$};
+    \node[below=2pt] at (-\wHalf,0) {$-\omega_{\text{3dB}}$};
+    \node[below=2pt] at (0,0) {$0$};
+    \node[below=2pt] at (\wHalf,0) {$\omega_{\text{3dB}}$};
+    \node[below=2pt] at (pi,0) {$\pi$};
+    \node[left=4pt] at (0,1) {$1$};
+
+    % ========== 绘制自然滚降频谱 H(ω) = cos²(ω/2) = (1+cosω)/2 ==========
+    \draw[pulse, domain=-pi:pi, samples=200] plot (\x, { (1+cos(\x r))/2 });
+
+\end{tikzpicture}\par}
+
+这样我们去做逼近才会比较有效
 
 
 
@@ -1630,6 +1795,7 @@ General Solution
 
 
 
+
 \newpage
 
 % 第二章
@@ -1637,9 +1803,11 @@ General Solution
 
 电磁学是研究电磁现象的学科，主要包括电场、磁场、电流等内容。
 
+
 \subsection{库仑定律}
 
 库仑定律描述了电荷之间的相互作用力。两个点电荷之间的相互作用力大小与电荷的乘积成正比，与它们之间的距离的平方成反比：
+
 
 \begin{equation}
     F = k_e \frac{q_1 q_2}{r^2}
