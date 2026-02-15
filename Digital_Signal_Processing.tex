@@ -1771,16 +1771,68 @@ General Solution
 \end{equation}
 我们的条件放松了。你具体到这个地方来看
 \begin{equation}
-    \sum_{k}\frac{\left | \sin \left( k\omega \right)\right | }{k\pi} = \infty \quad \omega = \pm \frac{\pi}{2}
+    \sum_{k}\frac{\left | \sin \left( k\omega \right)\right | }{k\pi} = \infty \quad\quad \omega = \pm \frac{\pi}{2}
 \end{equation}
 如果一平方，那么这就变成$\frac{1}{k^2}$
 了，$\frac{1}{k^2}$求和没问题。因此，尽管说我们不能逐点，但我们在均方意义下——这里的均方指的是先做平方差，然后求积分——你一求积分啊，个别点的问题就都不复存在了！积分对于个别点一点都不敏感，你少掉一个点，少掉两个点，这根本都无所谓。所以，这个其实是比逐点收敛要弱的。这是我们需要的收敛条件。
 
+\subsubsection{Poisson Summation Formula}\quad
+
 好的，现在我们呢，再给大家谈一点不是很常规的事情。因为常规的事情没有意思了，常规的事情我们就做作业就可以——我们做一点常规的傅里叶变换，熟悉一下傅里叶变换的基本的运算就可以了。我们再来一点不是很常规的。怎么说呢？既不满足绝对可和，也不满足均方可和
 \begin{equation}
-    x(n) = 1 \quad h\in \mathbb{Z}
+    x(n) = 1 \quad\quad n\in \mathbb{Z}
 \end{equation}
-这个怎么可和都不满足吧！
+这个怎么可和都不满足吧！既不满足绝对可和，也不满足均方可和。咱们在信号与系统里遇到过这种事，你想啊，$1$的傅里叶变换是什么？复指数做傅里叶变换，没问题吧！
+\begin{equation}
+    \int_{-\infty}^{+\infty}1\cdot e^{-j\omega t}\text{d}t = 2\pi \delta(\omega)
+\end{equation}
+复指数的积分是什么？是$\delta(\omega)$啊！这个东西信号与系统里应该讲过，那必然是$\delta(\omega)$，因为什么呢，因为你$\delta(\omega)$做傅里叶反变换做过来不是$1$吗？你傅里叶反变换有$\frac{1}{2\pi}$，我得把这两$\pi$给抵消掉，然后出来这玩意正好是$1$。
+
+好，连续的我们清晰了。离散的
+\begin{equation}
+    x(n) = 1 \quad\quad n\in \mathbb{Z}
+\end{equation}
+我们相当于是要做这个求和
+\begin{equation}
+    \sum_{k=-\infty}^{+\infty}1\cdot e^{-j\omega k}
+\end{equation}
+很可惜！现在我们不能够简单地用$\delta(\omega)$的性质去想象这个事情。这个求和的结果是多少？我们需要这么一件事
+\begin{equation}
+    \sum_{k=-\infty}^{+\infty}1\cdot e^{-j\omega k}=2\pi \sum_{k=-\infty}^{+\infty}\delta\left( \omega-2k \pi \right)
+\end{equation}
+这个求和的结果仍然跟$\delta$有关，但是它是一堆$\delta$的叠加。我们今天要给大家展示一下这件事是为什么呢，这个东西奥本海姆没有讲，我觉得这是一个巨大的缺陷，巨大的缺憾。奥本海姆这个书写得很好，好处我们就不说了，但他确实有一些地方写的，我个人是不太满意的。这就是其中之一。这个地方他是直接当定义给出来的。
+
+这件事不是定义出来的，是可以推出来的。推不清楚的事情，我们就很难去理解，因为你直接理解这件事情也是很困难的。我们要告诉大家这是一个非常有用的结果。这个叫泊松求和公式（Poisson Summation Formula）。
+
+这个结果为什么有用？我就说这一条啊，这一条对我们理解采样至关重要。就，什么是采样，这么一个动作，为什么采样意味着频谱搬移——这个结果起到了非常关键的一个作用。所以我们得让大家对这个结果有所理解。
+
+现在我们就开始理解这件事。我们可以给大家证明一个一般情况下的泊松求和公式。因为上面我们说的只是一个特例。
+
+那么我们一般情况下的泊松求和公式是什么样子的呢
+\begin{equation}
+    \sum_{k=-\infty}^{+\infty}x(t+kT) = ¿\quad\quad T>0
+\end{equation}
+其中这个大$T$是个确定的值。它的右端，我希望用这个$x$作为一个连续值函数的傅里叶变换来进行表达，它具体这个表达方式啊，我都记不得，我也懒得记，因为我们可以把它推出来。
+
+我令左端这件事为一个函数，这个总是可以的
+\begin{equation}
+    g(t )= \sum_{k=-\infty}^{+\infty}x(t+kT) \quad\quad g(t) = g(t+T)
+\end{equation}
+这个函数有什么特点？周期的吧！我这个$t+T$对这函数有影响吗？没有任何影响，换个元不就完了吗！你这个$t+kT$如果再加上一个$T$的话，那就变成$t+(k+1)T$了没错吧！然后你把整个$k+1$用$k'$换元不就完了吗！所以，这是一个周期函数。
+
+如果我们认可它是一个周期函数，这是就好办了。因为任何一个周期函数都可以做傅里叶级数，这一点是大家熟知的结果啊！就是说，我$g(t)$就可以来做傅里叶级数
+\begin{equation}
+    g(t) = \sum_{k=-\infty}^{+\infty}g_k e^{j2\pi \frac{k}{T}t}
+\end{equation}
+没错吧！因为你$\frac{1}{T}$是它的基频嘛，然后它傅里叶级数是在基频的倍数上进行展开的。因此，我一定是有这个结果。而这个$g_k$是啥呢
+\begin{equation}
+    g_k = \frac{1}{T}\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}g(t)e^{-j2\pi\frac{k}{T}t}\text{d}t
+\end{equation}
+就是我这个$g(t)$在一个周期上做积分的结果。这是我们在微积分里绝对学过的傅里叶级数。这个结果大家肯定是都知道的。如果现在已经有了这个结果，我们就可以开始求和了。
+
+
+
+
 
 
 
