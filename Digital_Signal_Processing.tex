@@ -1633,7 +1633,7 @@ General Solution
 
 但是大家发现了吗，这个信号就不大好——间断。就这个间断点会出毛病。我们告诉大家它这里出了什么毛病呢。就是我们在这啊，如果按照这里的计算，我们去做这个的傅里叶变换，照道理讲我们是应该就能直接回去啊！就是我在这做这个傅里叶变换我怎么做呢
 \begin{equation}
-    X\left ( e^{j\omega } \right) = \sum_{k=-\infty}^{+\infty}\frac{\sin \left( k\omega_0 \right)}{k\pi}e^{-j\omega k}
+    X\left ( e^{j\omega } \right) = \sum_{k=-N}^{N}\frac{\sin \left( k\omega_0 \right)}{k\pi}e^{-j\omega k}
 \end{equation}
 我这样做，那么根据我们刚才傅里叶变换的这个定义，很遗憾！这个东西啊，它不一定收敛！大家能够想象得到它在哪个点上会出问题吗？间断点上！因为你变换你是变回去，变回去我们是准备在频域上重新看这件事情，我当然希望它变回去以后，就变成我原来这个理想的样子了。可是，很遗憾！在间断点上，它的收敛性保证不了。
 
@@ -1759,18 +1759,28 @@ General Solution
 
 \end{tikzpicture}\par}
 
-这样我们去做逼近才会比较有效
+这样我们去做逼近才会比较有效地与我们的设计初衷和设计目标去吻合。我们后面在课程当中还会跟大家谈到滤波器设计的问题，在那个时候我们还会重新谈到这个话题。
 
+好，既然这出了问题——我们再提一句啊——已经收敛不了了，已经没法使这样的一个级数有效地去逼近我们需要的理想的低通滤波器的模样了。我们怎么办？如果直接地收敛不了，我们还有一种收敛方式，这个
+\begin{equation}
+    X\left ( e^{j\omega } \right) = \sum_{k=-N}^{N}\frac{\sin \left( k\omega_0 \right)}{k\pi}e^{-j\omega k} \Longrightarrow \lim_{N \to \infty} \frac{1}{2\pi}\int_{-\pi}^{\pi}\left | \sum_{k=-N}^{N}\frac{\sin \left( k\omega_0 \right)}{k\pi}e^{-j\omega k}-H(\omega) \right |^2 \text{d}\omega =0
+\end{equation}
+这个$H(\omega)$就是我们要的那个低通啊！我们可以以这样的收敛方式来处理问题——取极限！我们让这个积分呐，它的极限等于零。这里咱们不多展开，我只想告诉大家，这个东西比上面那个逐点收敛要弱，大家有意识吗？这个叫均方可和（Mean Square Summable）。这个玩意比上面那个逐点收敛要弱。均方可和，它的条件就不是这么强的一个条件了。而之前的绝对可和也是一个充分条件，是这个
+\begin{equation}
+   \sum_{k=-\infty}^{+\infty}\left | x(k) \right | < \infty \Longrightarrow \sum_{k=-\infty}^{+\infty}\left |  x\left ( k \right) \right |^2  < \infty
+\end{equation}
+我们的条件放松了。你具体到这个地方来看
+\begin{equation}
+    \sum_{k}\frac{\left | \sin \left( k\omega \right)\right | }{k\pi} = \infty \quad \omega = \pm \frac{\pi}{2}
+\end{equation}
+如果一平方，那么这就变成$\frac{1}{k^2}$
+了，$\frac{1}{k^2}$求和没问题。因此，尽管说我们不能逐点，但我们在均方意义下——这里的均方指的是先做平方差，然后求积分——你一求积分啊，个别点的问题就都不复存在了！积分对于个别点一点都不敏感，你少掉一个点，少掉两个点，这根本都无所谓。所以，这个其实是比逐点收敛要弱的。这是我们需要的收敛条件。
 
-
-
-
-
-
-
-
-
-
+好的，现在我们呢，再给大家谈一点不是很常规的事情。因为常规的事情没有意思了，常规的事情我们就做作业就可以——我们做一点常规的傅里叶变换，熟悉一下傅里叶变换的基本的运算就可以了。我们再来一点不是很常规的。怎么说呢？既不满足绝对可和，也不满足均方可和
+\begin{equation}
+    x(n) = 1 \quad h\in \mathbb{Z}
+\end{equation}
+这个怎么可和都不满足吧！
 
 
 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.12.30)  14 FEB 2026 21:55
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.12.30)  15 FEB 2026 16:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1540,7 +1540,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[53] (./Digital_Signal_Processing.aux)
+[53]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[54] (./Digital_Signal_Processing.aux)
 Package rerunfilecheck Info: File `Digital_Signal_Processing.out' has not chang
 ed.
 (rerunfilecheck)             Checksum: 6AEA8E73D6ED2D3F8CB1C0C3CDBF64D2;3666.
@@ -1554,4 +1563,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  84i,14n,89p,927b,879s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Digital_Signal_Processing.pdf (53 pages).
+Output written on Digital_Signal_Processing.pdf (54 pages).
