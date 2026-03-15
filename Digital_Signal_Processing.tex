@@ -1826,18 +1826,95 @@ General Solution
 \end{equation}
 没错吧！因为你$\frac{1}{T}$是它的基频嘛，然后它傅里叶级数是在基频的倍数上进行展开的。因此，我一定是有这个结果。而这个$g_k$是啥呢
 \begin{equation}
-    g_k = \frac{1}{T}\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}g(t)e^{-j2\pi\frac{k}{T}t}\text{d}t
+    g_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}g(t)e^{-j2\pi\frac{k}{T}t}\text{d}t
 \end{equation}
-就是我这个$g(t)$在一个周期上做积分的结果。这是我们在微积分里绝对学过的傅里叶级数。这个结果大家肯定是都知道的。如果现在已经有了这个结果，我们就可以开始求和了。我们把$g_k$给它代回去
+就是我这个$g(t)$在一个周期上做积分的结果。这是我们在微积分里绝对学过的傅里叶级数。这个结果大家肯定是都知道的。如果现在已经有了这个结果，我们就可以开始求和了。我们把$g(t)$给它代回去
 \begin{equation}
-    g(t) = \sum_{k=-\infty}^{+\infty}g_k e^{j2\pi \frac{k}{T}t}
+    g_k = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\left ( \sum_{n=-\infty}^{+\infty}x(t+nT)\right ) e^{-j2\pi \frac{k}{T}t}\text{d}t
 \end{equation}
-注意，这个地方
+注意，这个地方，为了区分啊！我们把这个角标换一下，把$k$换成$n$。好，瞅一瞅。这个地方很有意思，我在这个地方要换元！积分换元，我先把求和搁在前面
+\begin{equation}
+\begin{aligned}
+   g_k &= \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\left ( \sum_{n=-\infty}^{+\infty}x(t+nT)\right ) e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+nT)e^{-j2\pi \frac{k}{T}t}\text{d}t
+\end{aligned}
+\end{equation}
+我打算对这个积分进行换元。积分换元三件事，求和换元只有两件事。我们先把$t+nT$换成$t'$——第一件事所有的旧元换成新元。第二件事，我们要来处理这个雅可比，因为我们要把$\text{d}t$换成$\text{d}t'$，你现在$t$和$t'$仅仅是做一个平移，所以$\text{d}t$当然是等于$\text{d}t'$，没毛病。第三件事，我要动一下积分限，因为原本的$t$是从$-\frac{T}{2}$到$\frac{T}{2}$，现在我的$t'$显然是从$-\frac{T}{2}+nT$到$\frac{T}{2}+nT$。我们把换元的结果誊抄到这里
+\begin{equation}
+\begin{aligned}
+   g_k &= \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\left ( \sum_{n=-\infty}^{+\infty}x(t+nT)\right ) e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+nT)e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}+nT}^{\frac{T}{2}+nT}x(t')e^{-j2\pi \frac{k}{T}t'}\text{d}t'
+\end{aligned}
+\end{equation}
+所以，现在这个事情就有意思了。我们能看到一个什么？你仔细看看这个，我们来注意看这个积分上下限啊。当$n=0$的时候，它是从$-\frac{T}{2}$到$\frac{T}{2}$没错吧！当$n=1$的时候，它是不是从$\frac{T}{2}$到$\frac{3T}{2}$；当$n=2$的时候，它是不是从$\frac{3T}{2}$到$\frac{5T}{2}$？什么特点？全都连在一起的！如果是$n=-1$的时候，它是往负的那个方向去连在一起的。所以，这个东西是
+\begin{equation}
+\begin{aligned}
+   g_k &= \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\left ( \sum_{n=-\infty}^{+\infty}x(t+nT)\right ) e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+nT)e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}+nT}^{\frac{T}{2}+nT}x(t')e^{-j2\pi \frac{k}{T}t'}\text{d}t'\\
+&= \frac{1}{T}\int_{-\infty}^{+\infty}x(t')e^{-j2\pi \frac{k}{T}t'}\text{d}t'
+\end{aligned}
+\end{equation}
+这就是我们想要的东西。因为它实际上是在做$x$这个连续函数的傅里叶变换。在哪个频率上取值？就在$2\pi \frac{k}{T}$这个频率上取值。所以我们得到的是
+\begin{equation}
+\begin{aligned}
+   g_k &= \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\left ( \sum_{n=-\infty}^{+\infty}x(t+nT)\right ) e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t+nT)e^{-j2\pi \frac{k}{T}t}\text{d}t\\
+&= \frac{1}{T}\sum_{n=-\infty}^{+\infty}\int_{-\frac{T}{2}+nT}^{\frac{T}{2}+nT}x(t')e^{-j2\pi \frac{k}{T}t'}\text{d}t'\\
+&= \frac{1}{T}\int_{-\infty}^{+\infty}x(t')e^{-j2\pi \frac{k}{T}t'}\text{d}t'=\frac{1}{T}\hat{X}\left( \frac{2k\pi}{T}  \right )
+\end{aligned}
+\end{equation}
+我们把这个$g_k$给算了一下。现在我们再把它代回到$g(t)$里面去，所以我们就有
+\begin{equation}
+   \Longrightarrow \quad g(t)= \frac{1}{T}\sum_{k=-\infty}^{+\infty}\hat{X}\left( \frac{2k\pi}{T}  \right )e^{j2\pi \frac{k}{T}t}
+\end{equation}
+这正是我们想要写在这个地方的东西
+\begin{equation}
+    \sum_{k=-\infty}^{+\infty}x(t+kT) = \frac{1}{T}\sum_{k=-\infty}^{+\infty}\hat{X}\left( \frac{2k\pi}{T}  \right )e^{j2\pi \frac{k}{T}t}
+\end{equation}
+所谓的泊松求和公式。然后我们比较一下，这个比较很有意思。就是我们刚才写的奥本海姆的那个结果，它是这样的
+\begin{equation}
+   2\pi \sum_{k=-\infty}^{+\infty}\delta\left( \omega+2k \pi \right) =\sum_{k=-\infty}^{+\infty} e^{j\omega k}
+\end{equation}
+是不是一模一样？你把$x$跟这个$\delta$对应起来，然后令$T=2\pi$，是不是一模一样？唯一需要说明的是$\hat{X}\left( \frac{2k\pi}{T}  \right )$是怎么一回事？如果$x$是$\delta$的话，它的傅里叶变换难道不应该是1吗？所以，没问题！
 
+这一条，是我们的特例。体会一下，我们为什么要花这个力气，是因为我认为这件事情对于我们理解采样很重要。这个泊松求和公式它在数字信号处理当中，占据着一个特殊的地位，因为它是我们理解采样记为频谱搬移的基础。
 
+我们再回顾一下我们的做法啊。我们是试图对左端这么一个周期延拓之后连续求和进行表达，我们希望用到的$x$的傅里叶变换来表达左端的这个结果，我怎么才能做到这一点呢？首先我注意到左端是一个周期函数，它是以$T$为周期，这一点很关键，如果我有周期性作为基础，我就可以做傅里叶展开了，或者做傅里叶级数——这都是大家熟悉的东西。傅里叶级数，我们的周期它颠倒过来将成为基频，我在基频的倍数上，也在各个倍频上做展开。而我已经有了傅里叶级数以及傅里叶级数的系数的计算方法，我就可以把我们原始的函数代进来算就行。这是一个傅里叶积分的简单技巧，就是我们在这个地方换完了元，就发现它的积分限实际上是一段一段拼接起来的，刚好拼成正负无穷，因此我们刚好就用傅里叶变换来把它表达出来。而表达出来之后，一切都很明了了！
 
+我们怎么理解奥本海姆书上的这个式子呢？它是我们泊松求和的简单例子，太简单了！我们把$x$跟$\delta$对应起来，然后将周期等于$2\pi$，你代进来，然后就变成了这么一个样子。唯一需要考察的就是这傅里叶变换——你$\delta$的傅里叶变换那就是1啊！没毛病！
 
+\subsubsection{时域频域卷积和乘积}\quad
 
+好！我们下面再来谈两个，其实是大家已经熟知的——在连续信号下熟知的事实——关于卷积和乘积的关系。
+
+大家都知道！时域频域一边卷一边乘，没问题吧！这个连续信号，已经非常熟悉了。离散信号的情况下，这件事情呢，我们给大家简单地证明一下。
+
+因为这个事情其实很好证明。如果我们有这个式子，那么它就是这个结果
+\begin{equation}
+   z(n) = x(n)\circledast y(n)=\sum_{k=-\infty}^{+\infty}x(k)y(n-k)
+\end{equation}
+我现在要做$z(n)$的傅里叶变换，那么根据定义
+\begin{equation}
+   Z\left (e^{j\omega}\right ) = \sum_{n=-\infty}^{+\infty}z(n)e^{-j\omega n}
+\end{equation}
+这玩意应该等于两个求和
+\begin{equation}
+\begin{aligned}
+   Z\left (e^{j\omega}\right ) &= \sum_{n=-\infty}^{+\infty}z(n)e^{-j\omega n}\\
+&=\sum_{n=-\infty}^{+\infty}\sum_{k=-\infty}^{+\infty}x(k)y(n-k)e^{-j\omega n}
+\end{aligned}
+\end{equation}
+这种问题我们不是第一次处理了。大家回忆一下，我们在信号与系统里是怎么处理的，我们是把$n$拆了一下，拆成$n-k+k$的形式。然后把$n-k$给$y$，$k$给$x$，我们今天在离散信号上依葫芦画瓢
+\begin{equation}
+\begin{aligned}
+   Z\left (e^{j\omega}\right ) &= \sum_{n=-\infty}^{+\infty}z(n)e^{-j\omega n}\\
+&=\sum_{n=-\infty}^{+\infty}\sum_{k=-\infty}^{+\infty}x(k)y(n-k)e^{-j\omega n}\\
+&=\sum_{n=-\infty}^{+\infty}\sum_{k=-\infty}^{+\infty}x(k)e^{-j\omega k}y(n-k)e^{-j\omega \left( n-k\right )}
+\end{aligned}
+\end{equation}
+一目了然了吧！
 
 
 

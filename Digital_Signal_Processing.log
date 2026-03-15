@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.12.30)  20 FEB 2026 12:17
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.12.30)  15 MAR 2026 16:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1047,11 +1047,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 ]
-(./Digital_Signal_Processing.toc)
-\tf@toc=\write5
-\openout5 = `Digital_Signal_Processing.toc'.
-
-
+(./Digital_Signal_Processing.toc
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1060,7 +1056,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[2]
+[2])
+\tf@toc=\write5
+\openout5 = `Digital_Signal_Processing.toc'.
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1576,18 +1576,45 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[57] (./Digital_Signal_Processing.aux)
+[57]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[58]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[59]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[60] (./Digital_Signal_Processing.aux)
 Package rerunfilecheck Info: File `Digital_Signal_Processing.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: FF8E9F84A53C48A993DCA52630E8CD2F;3865.
+(rerunfilecheck)             Checksum: 7BBBC885B11B4EE5FC4E939BA4A80D33;4005.
  ) 
 Here is how much of TeX's memory you used:
  38498 strings out of 476683
  950770 string characters out of 5807574
- 1884012 words of memory out of 5000000
+ 1883012 words of memory out of 5000000
  58169 multiletter control sequences out of 15000+600000
  522221 words of font info for 98 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,14n,89p,927b,879s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,90p,927b,879s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Digital_Signal_Processing.pdf (57 pages).
+Output written on Digital_Signal_Processing.pdf (60 pages).

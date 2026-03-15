@@ -18,10 +18,11 @@
 \contentsline {subsubsection}{\numberline {3.1.1}Transition Function}{39}{subsubsection.3.1.1}%
 \contentsline {subsubsection}{\numberline {3.1.2}Discrete-Time Fourier Transform（DTFT）}{45}{subsubsection.3.1.2}%
 \contentsline {subsubsection}{\numberline {3.1.3}Poisson Summation Formula}{51}{subsubsection.3.1.3}%
-\contentsline {section}{\numberline {4}电磁学基础}{55}{section.4}%
-\contentsline {subsection}{\numberline {4.1}库仑定律}{55}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}电场}{55}{subsection.4.2}%
-\contentsline {section}{\numberline {5}热力学}{56}{section.5}%
-\contentsline {subsection}{\numberline {5.1}热力学第一定律}{56}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}热力学第二定律}{56}{subsection.5.2}%
-\contentsline {section}{\numberline {6}参考文献}{57}{section.6}%
+\contentsline {subsubsection}{\numberline {3.1.4}时域频域卷积和乘积}{56}{subsubsection.3.1.4}%
+\contentsline {section}{\numberline {4}电磁学基础}{58}{section.4}%
+\contentsline {subsection}{\numberline {4.1}库仑定律}{58}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}电场}{58}{subsection.4.2}%
+\contentsline {section}{\numberline {5}热力学}{59}{section.5}%
+\contentsline {subsection}{\numberline {5.1}热力学第一定律}{59}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}热力学第二定律}{59}{subsection.5.2}%
+\contentsline {section}{\numberline {6}参考文献}{60}{section.6}%
